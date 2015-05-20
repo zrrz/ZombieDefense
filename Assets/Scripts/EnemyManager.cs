@@ -3,7 +3,9 @@ using System.Collections;
 
 public class EnemyManager : MonoBehaviour {
 
-	public float spawnIncrement = 1.0f; //FIXME
+	// TODO build out a table or scriptableObject for each level that details how many and what type of enemies spawn. This guy will then draw from that on LevelLoad
+
+	public float spawnIncrement = 1.0f; // FIXME 
 	float timer = 0f;
 
 	public GameObject[] enemies;

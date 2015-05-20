@@ -3,9 +3,16 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour {
 
+	// TODO 
+	// cleaner drag method over multiple frames.
+	// Dying to fall damage and "throwing" into ground
+	// Attacking base
+	// Inheritance for different zombie types
+
 	const float GROUND_CHECK_DISTANCE = 0.8f;
 
 	public float movementSpeed = 3f;
+	public float throwSpeed = 0.5f;
 
 	float x;
 	float y;
@@ -18,6 +25,14 @@ public class Enemy : MonoBehaviour {
 	Rigidbody2D rigidbody2D;
 
 	public LayerMask groundMask;
+
+	public float collisionSpeed = 20f;
+
+	public int moneyValue = 20;
+
+	Vector3 prevVelocity;
+
+	public GameObject deathParticle;
 
 	void Start() {
 		rigidbody2D = GetComponent<Rigidbody2D>();
@@ -32,19 +47,37 @@ public class Enemy : MonoBehaviour {
 		else 
 			rigidbody2D.velocity = new Vector3(movementSpeed, 0f, 0f);
 		prevPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
+		prevVelocity = rigidbody2D.velocity;
 		CheckGrounded();
 	}
 
+	void OnCollisionEnter2D(Collision2D col) {
+		if(col.gameObject.tag == "Ground") {
+//			grounded = true;
+			print(prevVelocity.magnitude);
+			if(prevVelocity.magnitude > collisionSpeed) {
+				Die();
+			}
+		}
+	}
+
+	void Die() {
+		// TODO play anim
+		Instantiate(deathParticle, transform.position, Quaternion.identity);
+		GameManager.Instance.AddMoney(moneyValue);
+		Destroy(gameObject);
+	}
+
 	void OnMouseDrag() {
+		grounded = false;
 		dragged = true;
 		transform.position = Camera.main.ScreenToWorldPoint(new Vector3(x,y,10.0f));
 	}
 	
 	void OnMouseUp() {
 		dragged = false;
-		rigidbody2D.velocity = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - prevPos)/Time.deltaTime;
-		print (transform.position + " " + prevPos);
+		rigidbody2D.velocity = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - prevPos)/Time.deltaTime * throwSpeed;
+//		print (transform.position + " " + prevPos);
 	}
 
 	void CheckGrounded() {
