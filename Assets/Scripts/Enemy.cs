@@ -48,12 +48,12 @@ public class Enemy : MonoBehaviour {
 			rigidbody2D.velocity = new Vector3(movementSpeed, 0f, 0f);
 		prevPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		prevVelocity = rigidbody2D.velocity;
-		CheckGrounded();
+//		CheckGrounded();
 	}
 
 	void OnCollisionEnter2D(Collision2D col) {
 		if(col.gameObject.tag == "Ground") {
-//			grounded = true;
+			grounded = true;
 			print(prevVelocity.magnitude);
 			if(prevVelocity.magnitude > collisionSpeed) {
 				Die();
@@ -80,8 +80,8 @@ public class Enemy : MonoBehaviour {
 //		print (transform.position + " " + prevPos);
 	}
 
-	void CheckGrounded() {
-		grounded = Physics2D.Raycast(transform.position, -Vector2.up, GROUND_CHECK_DISTANCE, groundMask);
-		Debug.DrawRay(transform.position, -Vector3.up*GROUND_CHECK_DISTANCE, Color.red, 1.0f);
-	}
+//	void CheckGrounded() {
+//		grounded = Physics2D.Raycast(transform.position, -Vector2.up, GROUND_CHECK_DISTANCE, groundMask);
+//		Debug.DrawRay(transform.position, -Vector3.up*GROUND_CHECK_DISTANCE, Color.red, 1.0f);
+//	}
 }
