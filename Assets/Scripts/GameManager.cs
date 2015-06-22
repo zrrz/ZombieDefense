@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
 		UpdateMoneyImage();
 	}
 
-	public void TakeDamage(int amount) {
+	public void TakeDamage(float amount) {
 		curHealth -= amount;
 		UpdateHealthImage();
 	}
