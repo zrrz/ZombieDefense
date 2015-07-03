@@ -11,9 +11,9 @@ public class EnemyManager : MonoBehaviour {
 	public GameObject[] enemies;
 	public Transform spawnPos;
 
-	void Start () {
-	
-	}
+//	void Start () {
+//	
+//	}
 	
 	void Update () {
 		timer += Time.deltaTime;
@@ -29,6 +29,6 @@ public class EnemyManager : MonoBehaviour {
 			return;
 		}
 
-		GameObject enemy = (GameObject)Instantiate(enemies[Random.Range(0, enemies.Length)], spawnPos.position, Quaternion.identity);
+		/*GameObject enemy = (GameObject)*/Instantiate(enemies[Random.Range(0, enemies.Length)], spawnPos.position, Quaternion.identity);
 	}
 }
