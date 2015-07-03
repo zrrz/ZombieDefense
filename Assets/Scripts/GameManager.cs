@@ -45,7 +45,27 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void UpdateMoneyImage() {
-		moneyImage.text = money.ToString(); // TODO break text into "k"s if > 1,000, and "m" if > 1,000,000
+		moneyImage.text = "Gold: " + money.ToString(); // TODO break text into "k"s if > 1,000, and "m" if > 1,000,000
+	}
+
+	public void GoToBattleScene() {
+		StartCoroutine("LerpCamera", new Vector3(0f, 0f, -10f));
+	}
+
+	public void GoToCastleScene() {
+		StartCoroutine("LerpCamera", new Vector3(17.76f, 0f, -10f)); //FIXME
+	}
+
+	IEnumerator LerpCamera(Vector3 endPos) {
+		Transform cam = Camera.main.transform;
+		float timer = 0.0f;
+		Vector3 startPos = cam.transform.position;
+		while(timer < 1.0f) {
+			timer += Time.deltaTime;
+			cam.transform.position = Vector3.Lerp(startPos, endPos, timer);
+			yield return null;
+		}
+		cam.transform.position = endPos;
 	}
 
 	public static GameManager Instance {
